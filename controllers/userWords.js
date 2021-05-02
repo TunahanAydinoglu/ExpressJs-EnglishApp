@@ -10,6 +10,7 @@ const getAllUserWords = errorWrapper(async (req, res, next) => {
   const user = await User.findById(user_id).populate("userWords");
 
   const userData = {
+    id : user_id,
     name : user.name,
     email : user.email,
     role : user.role,
@@ -17,12 +18,12 @@ const getAllUserWords = errorWrapper(async (req, res, next) => {
     isShowMemory : user.isShowMemory,
     blocked : user.blocked,
   };
-  
+
   const userWords = await user?.userWords;
 
   res.status(200).json({
     success: true,
-    user: userData,
+    userInfo: userData,
     data: userWords,
   });
 });
@@ -32,6 +33,7 @@ const getAllUserLastWords = errorWrapper(async (req, res, next) => {
   const user = await User.findById(user_id).populate("userLastWords");
 
   const userData = {
+    id : user_id,
     name : user.name,
     email : user.email,
     role : user.role,
@@ -44,7 +46,7 @@ const getAllUserLastWords = errorWrapper(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    user : userData,
+    userInfo : userData,
     data: userLastWords,
   });
 });
