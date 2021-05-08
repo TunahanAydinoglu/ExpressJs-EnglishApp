@@ -20,7 +20,7 @@ const getAllUserWords = errorWrapper(async (req, res, next) => {
     blocked: user.blocked,
   };
 
-  const userWords = await user?.userWords.sort((a, b) => a.updatedAt - b.updatedAt);
+  const userWords = await user?.userWords.sort((a, b) => b.updatedAt - a.updatedAt);
 
   res.status(200).json({
     success: true,
