@@ -15,6 +15,7 @@ const getAllUserWords = errorWrapper(async (req, res, next) => {
     email: user.email,
     role: user.role,
     profileImage: user.profile_image,
+    userLastWordCount: user.userLastWordCount,
     isShowCount: user.isShowCount,
     isShowMemory: user.isShowMemory,
     blocked: user.blocked,
