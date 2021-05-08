@@ -6,7 +6,7 @@ const {
 
 const {
   getAllUserWords,
-  getAllUserLastWords,
+  // getAllUserLastWords,
   addNewUserWords
 } = require("../controllers/userWords");
 
@@ -18,7 +18,7 @@ const router = express.Router({ mergeParams: true });
 
 router.get("/", getAccessToRoute, getAllUserWords);
 
-router.get("/last", getAccessToRoute, getAllUserLastWords);
+// router.get("/last", getAccessToRoute, getAllUserLastWords);
 
 // router.get("/quiz",getAllUserLastWords);
 

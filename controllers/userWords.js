@@ -138,6 +138,5 @@ const addNewUserWords = errorWrapper(async (req, res, next) => {
 
 module.exports = {
   getAllUserWords,
-  addNewUserWords,
-  getAllUserLastWords
+  addNewUserWords
 };
