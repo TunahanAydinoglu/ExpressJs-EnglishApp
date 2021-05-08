@@ -47,12 +47,10 @@ const UserSchema = new Schema({
       ref: "UserWord",
     },
   ],
-  userLastWords: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: "UserLastWord",
+  userLastWordCount: {
+      type: Number,
+      default: 0
     },
-  ],
   profile_image: {
     type: String,
     default: "default_profile.jpg",
