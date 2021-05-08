@@ -11,12 +11,10 @@ const UserWordSchema = new Schema({
     type: String,
   },
   createdAt: {
-    type: Date,
-    default: Date.now,
+    type: Number,
   },
   updatedAt: {
-    type: Date,
-    default: Date.now,
+    type: Number,
   },
   counter: {
     type: Number,

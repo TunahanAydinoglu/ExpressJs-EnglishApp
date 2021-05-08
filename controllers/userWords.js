@@ -21,7 +21,7 @@ const getAllUserWords = errorWrapper(async (req, res, next) => {
     blocked: user.blocked,
   };
 
-  const userWords = await user?.userWords.sort((a, b) => b.updatedAt - a.updatedAt);
+  const userWords = await user.userWords.sort((a, b) => { return b.updatedAt - a.updatedAt });
 
   res.status(200).json({
     success: true,
@@ -69,10 +69,6 @@ const addNewUserWords = errorWrapper(async (req, res, next) => {
   user.userLastWordCount = uniqueWords.length;
   user.save();
 
-  // await UserLastWord.deleteMany({
-  //   user: user_id,
-  // });
-
   uniqueWords.forEach((word) => {
     let checker = true;
     user.userWords.forEach((el, index) => {
@@ -95,15 +91,20 @@ const addNewUserWords = errorWrapper(async (req, res, next) => {
         translation:
           dbWord.length > 0 ? dbWord.translation : "kelime bulunamadi",
         user: user_id,
+        createdAt: Date.now(),
+        updatedAt: Date.now()
       });
       addedWords.push(word);
     }
   });
+
   //eski gorulen kelimelerin sayacini arttir
   oldWordIds.forEach(async (id) => {
     let userWord = await UserWord.findById(id);
+    console.log(userWord.counter);
     userWord.counter++;
-    userWord.updatedAt = Date.now;
+    console.log(userWord.counter);
+    userWord.updatedAt = Date.now();
     userWord.save();
     // lastWords.push(userWord);
   });
