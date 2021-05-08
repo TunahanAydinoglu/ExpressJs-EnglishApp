@@ -68,6 +68,10 @@ const addNewUserWords = errorWrapper(async (req, res, next) => {
   user.userLastWords = [];
   user.save();
 
+  await UserLastWord.deleteMany({
+    user: user_id,
+  });
+
   uniqueWords.forEach((word) => {
     let checker = true;
     user.userWords.forEach((el, index) => {
@@ -106,17 +110,13 @@ const addNewUserWords = errorWrapper(async (req, res, next) => {
       });
     }
   });
-  
+
   //eski gorulen kelimelerin sayacini arttir
   oldWordIds.forEach(async (id) => {
     let userWord = await UserWord.findById(id);
     userWord.counter++;
     userWord.save();
     lastWords.push(userWord);
-  });
-
-  const delResult = await UserLastWord.deleteMany({
-    user: user_id,
   });
 
   lastWords.forEach(async (wordModel) => {
