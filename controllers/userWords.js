@@ -95,6 +95,18 @@ const addNewUserWords = errorWrapper(async (req, res, next) => {
     }
   });
 
+  addedWords.forEach(async (word) => {
+    if (word != "") {
+      let dbWord = await Vocabulary.find({ word: word });
+      await UserLastWord.create({
+        word: word,
+        translation:
+          dbWord.length > 0 ? dbWord.translation : "kelime bulunamadi",
+        user: user_id,
+      });
+    }
+  });
+  
   //eski gorulen kelimelerin sayacini arttir
   oldWordIds.forEach(async (id) => {
     let userWord = await UserWord.findById(id);
@@ -118,17 +130,7 @@ const addNewUserWords = errorWrapper(async (req, res, next) => {
     });
   });
 
-  addedWords.forEach(async (word) => {
-    if (word != "") {
-      let dbWord = await Vocabulary.find({ word: word });
-      await UserLastWord.create({
-        word: word,
-        translation:
-          dbWord.length > 0 ? dbWord.translation : "kelime bulunamadi",
-        user: user_id,
-      });
-    }
-  });
+ 
 
   res.status(200).json({
     success: true,

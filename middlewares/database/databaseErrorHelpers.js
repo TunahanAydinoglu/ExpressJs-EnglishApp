@@ -1,6 +1,4 @@
 const path = require("path");
-const slugify = require("slugify");
-const UserWord = require("../../models/UserWord");
 const root = path.dirname(require.main.filename);
 
 const User = require(root + "/models/User");
