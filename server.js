@@ -23,7 +23,7 @@ connectDatabase();
 const app = express();
 app.use(cors());
 app.use(express.json());
-const PORT = process.env.PORT
+const PORT = process.env.PORT;
 console.log(PORT)
 // Security
 
@@ -45,7 +45,6 @@ app.use(express.static("public"));
 
 // Error Handler Middleware
 app.use(errorHandler);
-
 
 // Starting Our Server
 app.listen(PORT,() => {

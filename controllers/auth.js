@@ -33,9 +33,13 @@ const login = errorWrapper(async (req, res, next) => {
   sendTokenToClient(user, res, 200);
 });
 const getLoggedInUser = errorWrapper(async (req, res, next) => {
+  const user_id = req.user.id;
+
+  var user = await User.findById(user_id);
+
   res.status(200).json({
     success: true,
-    data: req.user,
+    data: user,
   });
 });
 const logout = errorWrapper(async (req, res, next) => {
