@@ -30,6 +30,47 @@ const getAllUserWords = errorWrapper(async (req, res, next) => {
   });
 });
 
+const getQuiz = errorWrapper(async (req, res, next) => {
+  const user_id = req.user.id;
+  const user = await User.findById(user_id).populate("userWords");
+  const { userWords } = user;
+  const shuffleWords = userWords.sort(() => .5 - Math.random());
+
+  let quiz = shuffleWords.map((word, index) => {
+    let answerIndex = Math.floor(Math.random() * 4);
+
+    let answersWordsIndexs = [];
+    answersWordsIndexs.push(index);
+
+    while (answersWordsIndexs.lenth < 4) {
+      let randomIndex = Math.floor(Math.random() * shuffleWords.length);
+      if (randomIndex != index) {
+        answersWordsIndexs.push(randomIndex);
+      }
+    }
+
+    let optionsArray = [];
+    answersWordsIndexs.map((rank, index) => {
+      optionsArray[index] = shuffleWords[rank].translation;
+    })
+
+    let questionWord = {
+      id: index + 1,
+      question: word.word,
+      answer_index: answerIndex,
+      options: optionsArray
+    };
+
+    return questionWord;
+  });
+
+  res.status(200).json({
+    success: true,
+    questionCount: userwords.length,
+    data: quiz
+  });
+})
+
 // const getAllUserLastWords = errorWrapper(async (req, res, next) => {
 //   const user_id = req.user.id;
 //   const user = await User.findById(user_id).populate("userLastWords");
@@ -140,5 +181,6 @@ const addNewUserWords = errorWrapper(async (req, res, next) => {
 
 module.exports = {
   getAllUserWords,
+  getQuiz,
   addNewUserWords
 };

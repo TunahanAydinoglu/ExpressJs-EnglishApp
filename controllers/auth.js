@@ -32,6 +32,7 @@ const login = errorWrapper(async (req, res, next) => {
 
   sendTokenToClient(user, res, 200);
 });
+
 const getLoggedInUser = errorWrapper(async (req, res, next) => {
   const user_id = req.user.id;
 
