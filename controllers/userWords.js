@@ -108,8 +108,7 @@ const addNewUserWords = errorWrapper(async (req, res, next) => {
 
   const user = await User.findById(user_id)
     .populate("userWords");
-  // .populate("userLastWords");
-  // user.userLastWords = [];
+
   user.userLastWordCount = uniqueWords.length;
   user.save();
 
@@ -126,7 +125,6 @@ const addNewUserWords = errorWrapper(async (req, res, next) => {
     }
   });
 
-
   //yeni gorulen kelimeleri ekle
   newWords.forEach(async (wordd) => {
     if (wordd != "") {
@@ -134,7 +132,7 @@ const addNewUserWords = errorWrapper(async (req, res, next) => {
       await UserWord.create({
         word: wordd,
         translation:
-          dbWord.translation.length > 0 ? dbWord.translation : "kelime bulunamadi",
+          dbWord ? dbWord.translation : "kelime bulunamadi",
         user: user_id,
         createdAt: Date.now(),
         updatedAt: Date.now()
