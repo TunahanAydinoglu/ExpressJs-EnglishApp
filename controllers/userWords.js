@@ -126,55 +126,31 @@ const addNewUserWords = errorWrapper(async (req, res, next) => {
     }
   });
 
+
   //yeni gorulen kelimeleri ekle
-  newWords.forEach(async (word) => {
-    if (word != "") {
-      let dbWord = await Vocabulary.find({ word: word });
+  newWords.forEach(async (wordd) => {
+    if (wordd != "") {
+      let dbWord = await Vocabulary.findOne({ word: wordd });
       await UserWord.create({
-        word: word,
+        word: wordd,
         translation:
-          dbWord.length > 0 ? dbWord.translation : "kelime bulunamadi",
+          dbWord.translation.length > 0 ? dbWord.translation : "kelime bulunamadi",
         user: user_id,
         createdAt: Date.now(),
         updatedAt: Date.now()
       });
-      addedWords.push(word);
+      addedWords.push(wordd);
     }
   });
 
   //eski gorulen kelimelerin sayacini arttir
   oldWordIds.forEach(async (id) => {
     let userWord = await UserWord.findById(id);
-    console.log(userWord.counter);
     userWord.counter++;
-    console.log(userWord.counter);
     userWord.updatedAt = Date.now();
     userWord.save();
     // lastWords.push(userWord);
   });
-
-  // lastWords.forEach(async (wordModel) => {
-  //   let dbWord = await Vocabulary.find({ word: wordModel.word });
-  //   await UserLastWord.create({
-  //     word: wordModel.word,
-  //     translation: dbWord.length > 0 ? dbWord.translation : "kelime bulunamadi",
-  //     user: user_id,
-  //     counter: wordModel.counter,
-  //     isMemory: wordModel.isMemory,
-  //   });
-  // });
-
-  // addedWords.forEach(async (word) => {
-  //   if (word != "") {
-  //     let dbWord = await Vocabulary.find({ word: word });
-  //     await UserLastWord.create({
-  //       word: word,
-  //       translation:
-  //         dbWord.length > 0 ? dbWord.translation : "kelime bulunamadi",
-  //       user: user_id,
-  //     });
-  //   }
-  // });
 
   res.status(200).json({
     success: true,

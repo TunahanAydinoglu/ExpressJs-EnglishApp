@@ -10,7 +10,8 @@ const {
     getAllUsers,
     getSingleUser,
     deleteUser,
-    getBlockUser
+    getBlockUser,
+    addVocabulary
 }  = require("../controllers/admin");
 
 const userQueryMiddleware = require("../middlewares/query/userQueryMiddleware");
@@ -29,6 +30,6 @@ router.get("/users",userQueryMiddleware(User),getAllUsers);
 router.get("/user/:id",checkUserExist,getSingleUser);
 router.get("/block/:id",checkUserExist,getBlockUser);
 router.delete("/user/:id",checkUserExist,deleteUser);
-
+router.post("/vocabulary", addVocabulary);
 
 module.exports = router;

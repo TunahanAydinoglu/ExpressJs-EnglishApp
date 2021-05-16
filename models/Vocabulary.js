@@ -6,13 +6,11 @@ const VocabularySchema = new Schema({
   word: {
     type: String,
     unique:true,
-    required: [true, "Please provide a title"],
-    minlength: [1, "Please provide title at least 1 characters"],
+    required: [true, "Please provide a word"],
   },
   translation: {
     type: String,
-    required: [true, "Please provide a content"],
-    minlength: [1, "Please provide content at least 1 characters"],
+    required: [true, "Please provide a translation"],
   },
   createdAt: {
     type: Date,
