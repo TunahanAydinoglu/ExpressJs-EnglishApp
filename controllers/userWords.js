@@ -98,6 +98,16 @@ const getQuiz = errorWrapper(async (req, res, next) => {
 //   });
 // });
 
+const deleteUserWords = errorWrapper(async (req,res,next)=>{
+  const {id} = req.params;
+
+  await User.findByIdAndRemove(id);
+
+  res.status(200).json({
+    success: true,
+    data: {},
+  });
+})
 const addNewUserWords = errorWrapper(async (req, res, next) => {
   const user_id = req.user.id;
   let { uniqueWords } = req;
@@ -159,5 +169,6 @@ const addNewUserWords = errorWrapper(async (req, res, next) => {
 module.exports = {
   getAllUserWords,
   getQuiz,
+  deleteUserWords,
   addNewUserWords
 };

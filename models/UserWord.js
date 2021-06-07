@@ -48,6 +48,12 @@ UserWordSchema.pre("save", async function (next) {
   }
 });
 
+UserWordSchema.post("remove", async function(){
+  const user = await User.findById(this.user);
+  user.userWords.splice(lesson.userWords.indexOf(this._id),1);
+  await user.save();
+})
+
 // UserWordSchema.methods.makeSlug = function () {
 //   return slugify(this.title, {
 //     replacement: "-",

@@ -8,6 +8,7 @@ const {
   getAllUserWords,
   // getAllUserLastWords,
   getQuiz,
+  deleteUserWords,
   addNewUserWords
 } = require("../controllers/userWords");
 
@@ -25,5 +26,6 @@ router.get("/quiz", getAccessToRoute, getQuiz);
 // router.get("/quiz",getAllUserLastWords);
 
 router.post("/", [getAccessToRoute, checkUserWordsExist], addNewUserWords);
+router.delete("/:id/delete", [getAccessToRoute, checkUserWordsExist], deleteUserWords);
 
 module.exports = router;
